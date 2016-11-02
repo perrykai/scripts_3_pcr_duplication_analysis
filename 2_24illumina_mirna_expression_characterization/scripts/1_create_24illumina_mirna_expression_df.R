@@ -2,7 +2,7 @@
 #' 
 #' **Directory of Code:**  `/mnt/research/pigeqtl/analyses/microRNA/3_pcr_duplication_analysis/2_24illumina_mirna_expression_characterization/scripts`
 #' 
-#' **Date:**  8/17/16
+#' **Date:**  8/17/16 #UPDATED 8/25/16
 #' 
 #' **Input File Directory:**  `/mnt/research/pigeqtl/analyses/microRNA/3_pcr_duplication_analysis/1_preprocess_24_illumina_samples/9_mirdeep2_core_quantify_predict_24illumina_output`
 #' 
@@ -10,7 +10,7 @@
 #' 
 #' **Output File Directory:** `/mnt/research/pigeqtl/analyses/microRNA/3_pcr_duplication_analysis/2_24illumina_mirna_expression_characterization`
 #' 
-#' **Output File(s):** `1_24illumina_filtered_rounded_mean_mature_mirna_exp.Rdata`
+#' **Output File(s):** `1_24illumina_rounded_mean_mature_mirna_exp.Rdata`
 #' 
 #' **Table of contents:**
 #'
@@ -32,9 +32,8 @@
 #' 1. Extract the columns of the mature miRNA read counts for each animal
 #' 2. Use the 'by' function to apply the function colmeans to the entire data frame of read counts (What this will do is go down the columns looking at the index of grouped miRNA names and take the average of the read counts for that group of miRNA. The result of this will be a list containing the average read counts for each miRNA for each animal)
 #' 3. Transform the list output back into a data.frame using the plyr package to prepare for gblup function
-#' 4. Filter the data for expression threshold: The total read count for the miRNA needs to be greater than 0
-#' 5. Restore the pig IDs in place of the 3-digit codes as the column names of the data frame, for use with the gblup function of gwaR
-#' 6. Round the mean read counts to the nearest integer for use with the edgeR package.
+#' 4. Restore the pig IDs in place of the 3-digit codes as the column names of the data frame, for use with the gblup function of gwaR
+#' 5. Round the mean read counts to the nearest integer for use with the edgeR package.
 
 #' ## Install libraries
 library(plyr)
@@ -124,51 +123,41 @@ head(meanrc)
 #'      of the index column. For compatibility, omit this argument or pass "NA" to avoid converting the index column
 #'      to a factor; in this case, ".id" is used as column name.
 
-dfmeanrc<-ldply(meanrc, fun=NULL, id=names(meanrc))
+illumina24.dfmeanrc<-ldply(meanrc, fun=NULL, id=names(meanrc))
 
-head(dfmeanrc[1:8])
+head(illumina24.dfmeanrc[1:8])
 
-dim(dfmeanrc)
+dim(illumina24.dfmeanrc)
 #' These dimensions are what would be expected, because there are 411 mature sus scrofa miRNA sequences in miRBase,
 #' and there are 24 animals in the analysis, plus the miRNA column.
 #' 
 #' Check that the correct miRNA name went with the correct data:
-if (sum(names(meanrc)!=dfmeanrc[,1]) != 0) stop ("miRNA names are not the same")
+if (sum(names(meanrc)!=illumina24.dfmeanrc[,1]) != 0) stop ("miRNA names are not the same")
 
-colnames(dfmeanrc)[[1]]<-"miRNA"
+colnames(illumina24.dfmeanrc)[[1]]<-"miRNA"
 
-if (sum(colnames(dfmeanrc)!=colnames(mirquant)) != 0) stop ("animal order not the same")
+if (sum(colnames(illumina24.dfmeanrc)!=colnames(mirquant)) != 0) stop ("animal order not the same")
 
-head(dfmeanrc[,1:10])
+head(illumina24.dfmeanrc[,1:10])
 
-#' ### 4. Filter the data for expression threshold: The total read count for the miRNA needs to be greater than 0
-#' 
 #' Set first column of dfmeanrc (miRNA ids) as the row.names:
-rownames(dfmeanrc)<-dfmeanrc$miRNA
+rownames(illumina24.dfmeanrc)<-illumina24.dfmeanrc$miRNA
 
 #' Eliminate column of row names:
-dfmeanrc<-dfmeanrc[,-c(1)]
-head(dfmeanrc[,1:10])
-dim(dfmeanrc)
+illumina24.dfmeanrc<-illumina24.dfmeanrc[,-c(1)]
+head(illumina24.dfmeanrc[,1:10])
+dim(illumina24.dfmeanrc)
 
 #' 
 #' How many miRNAs are not expressed (total read count across all libraries = 0)?
-head(rowSums(dfmeanrc))
-tail(rowSums(dfmeanrc))
-table(rowSums(dfmeanrc)==0)
+head(rowSums(illumina24.dfmeanrc))
+tail(rowSums(illumina24.dfmeanrc))
+table(rowSums(illumina24.dfmeanrc)==0)
 
 #' So, 86 miRNA profiles contain 0 read counts total, meaning 0 expression
 #' 
-#' Filter the matrix to keep only those miRNAs whose total expression is greater than 0.
-illumina24.no.zero.dfmeanrc<-dfmeanrc[rowSums(dfmeanrc)>0,]
-dim(illumina24.no.zero.dfmeanrc)
-head(illumina24.no.zero.dfmeanrc[,1:10])
 
-if (sum(rowSums(illumina24.no.zero.dfmeanrc)==0)!= 0) stop ("expression filtering did not work correctly")
-
-if (sum(colnames(illumina24.no.zero.dfmeanrc)!=colnames(dfmeanrc)) != 0) stop ("animal order not the same")
-
-#' ### 5. Restore the pig IDs in place of the 3-digit codes as the column names of the data frame, for use with the gblup function of gwaR
+#' ### 4. Restore the pig IDs in place of the 3-digit codes as the column names of the data frame, for use with the gblup function of gwaR
 
 head(configfile)
 
@@ -182,31 +171,31 @@ head(configfile)
 #' 
 #' So, when using match, need to have the first argument be the matrix/dataframe you want to change or match, and the second argument be what you want to index it by or match it against. 
 #' 
-#' "Where does [vector] match in [matrix]?" or "Match the column names of illumina24.no.zero.dfmeanrc to the configfile "code" column, then return the corresponding pigid."
-configfile[match(colnames(illumina24.no.zero.dfmeanrc),configfile$code),"pigid"]
+#' "Where does [vector] match in [matrix]?" or "Match the column names of illumina24.dfmeanrc to the configfile "code" column, then return the corresponding pigid."
+configfile[match(colnames(illumina24.dfmeanrc),configfile$code),"pigid"]
 
 #' Assign the column names using match:
-colnames(illumina24.no.zero.dfmeanrc)<- configfile[match(colnames(illumina24.no.zero.dfmeanrc),configfile$code),"pigid"]
-head(illumina24.no.zero.dfmeanrc[1:10])
-dim(illumina24.no.zero.dfmeanrc)
+colnames(illumina24.dfmeanrc)<- configfile[match(colnames(illumina24.dfmeanrc),configfile$code),"pigid"]
+head(illumina24.dfmeanrc[1:10])
+dim(illumina24.dfmeanrc)
 
-if (sum(colnames(illumina24.no.zero.dfmeanrc)!=(configfile$pigid))!=0) stop ("match function did not work correctly")
+if (sum(colnames(illumina24.dfmeanrc)!=(configfile$pigid))!=0) stop ("match function did not work correctly")
 
-#' ### 6. Round the mean read counts to the nearest integer for use with the voom function
-illumina24.no.zero.dfmeanrc[1:10,1:6]
+#' ### 5. Round the mean read counts to the nearest integer for use with the voom function
+illumina24.dfmeanrc[1:10,1:6]
 
-illumina24.no.zero.dfmeanrcround<-round(illumina24.no.zero.dfmeanrc)
+illumina24.dfmeanrcround<-round(illumina24.dfmeanrc)
 
-illumina24.no.zero.dfmeanrcround[1:10,1:6]
+illumina24.dfmeanrcround[1:10,1:6]
 
-#' The final matrix of filtered, rounded, mean read counts needs to have miRNA rownames and Animal ID colnames
-head(rownames(illumina24.no.zero.dfmeanrcround))
+#' The final matrix of rounded, mean read counts needs to have miRNA rownames and Animal ID colnames
+head(rownames(illumina24.dfmeanrcround))
 
-head(colnames(illumina24.no.zero.dfmeanrcround))
+head(colnames(illumina24.dfmeanrcround))
 
-if (sum(colnames(illumina24.no.zero.dfmeanrcround)!= configfile$pigid)!= 0) stop ("rownames do not match pigid")
+if (sum(colnames(illumina24.dfmeanrcround)!= configfile$pigid)!= 0) stop ("rownames do not match pigid")
 
 
 #' ## Save data
-#' What I am saving here is the filtered, rounded, average read counts in an .Rdata object
-save(illumina24.no.zero.dfmeanrcround, file = "../1_24illumina_filtered_rounded_mean_mature_mirna_exp.Rdata")
+#' What I am saving here is the rounded, average read counts in an .Rdata object
+save(illumina24.dfmeanrcround, file = "../1_24illumina_rounded_mean_mature_mirna_exp.Rdata")
