@@ -1,120 +1,0 @@
-
-The following have been reloaded with a version change:
-  1) R/3.1.0 => R/3.2.0
-
-
-
-processing file: 1_extract_24bioosci_libraries_for_quantification.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |...                                                              |   5%
-  ordinary text without R code
-
-  |                                                                         |......                                                           |  10%
-label: unnamed-chunk-1
-  |                                                                         |.........                                                        |  14%
-  ordinary text without R code
-
-  |                                                                         |............                                                     |  19%
-label: unnamed-chunk-2
-  |                                                                         |...............                                                  |  24%
-  ordinary text without R code
-
-  |                                                                         |...................                                              |  29%
-label: unnamed-chunk-3
-  |                                                                         |......................                                           |  33%
-  ordinary text without R code
-
-  |                                                                         |.........................                                        |  38%
-label: unnamed-chunk-4
-  |                                                                         |............................                                     |  43%
-  ordinary text without R code
-
-  |                                                                         |...............................                                  |  48%
-label: unnamed-chunk-5
-  |                                                                         |..................................                               |  52%
-  ordinary text without R code
-
-  |                                                                         |.....................................                            |  57%
-label: unnamed-chunk-6
-  |                                                                         |........................................                         |  62%
-  ordinary text without R code
-
-  |                                                                         |...........................................                      |  67%
-label: unnamed-chunk-7
-  |                                                                         |..............................................                   |  71%
-  ordinary text without R code
-
-  |                                                                         |..................................................               |  76%
-label: unnamed-chunk-8
-  |                                                                         |.....................................................            |  81%
-  ordinary text without R code
-
-  |                                                                         |........................................................         |  86%
-label: unnamed-chunk-9
-  |                                                                         |...........................................................      |  90%
-  ordinary text without R code
-
-  |                                                                         |..............................................................   |  95%
-label: unnamed-chunk-10
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: 1_extract_24bioosci_libraries_for_quantification.md
-
-Job Id: 34442825.mgr-04.i
-    Job_Name = 1_extract_24bioosci_libraries_for_quantification
-    Job_Owner = perrykai@dev-intel14-k20.i
-    job_state = R
-    queue = main
-    server = mgr-04.i
-    Checkpoint = u
-    ctime = Tue Aug 23 13:42:41 2016
-    Error_Path = dev-intel14-k20:/mnt/research/pigeqtl/analyses/microRNA/3_pcr
-	_duplication_analysis/3_24bioosci_mirna_expression_characterization/sc
-	ripts/1_extract_24bioosci_libraries_for_quantification_literate/1_extr
-	act_24bioosci_libraries_for_quantification.out
-    exec_host = css-123/6
-    Hold_Types = n
-    Join_Path = oe
-    Keep_Files = n
-    Mail_Points = abe
-    mtime = Tue Aug 23 13:43:35 2016
-    Output_Path = dev-intel14-k20:/mnt/research/pigeqtl/analyses/microRNA/3_pc
-	r_duplication_analysis/3_24bioosci_mirna_expression_characterization/s
-	cripts/1_extract_24bioosci_libraries_for_quantification_literate/1_ext
-	ract_24bioosci_libraries_for_quantification.out
-    Priority = 0
-    qtime = Tue Aug 23 13:42:42 2016
-    Rerunable = False
-    Resource_List.mem = 1gb
-    Resource_List.nodect = 1
-    Resource_List.nodes = 1:ppn=1:intel14
-    Resource_List.walltime = 00:05:00
-    session_id = 38655
-    Variable_List = PBS_O_QUEUE=main,PBS_O_HOME=/mnt/home/perrykai,
-	PBS_O_LOGNAME=perrykai,
-	PBS_O_PATH=/opt/software/R/3.1.0--GCC-4.4.5/bin:/opt/software/powerto
-	ols/bin:/opt/software/cudatoolkit/6.0/computeprof/bin:/opt/software/cu
-	datoolkit/6.0/bin:/opt/software/Stata/13.0:/opt/software/MATLAB/R2014a
-	/bin:/opt/software/Python/2.7.2--GCC-4.4.5/bin:/opt/software/cmake/2.8
-	.5--GCC-4.4.5/bin:/opt/software/OpenMPI/1.4.3--GCC-4.4.5/bin:/usr/lib6
-	4/qt-3.3/bin:/opt/software/lmod/bin:/opt/moab/bin:/usr/local/bin:/bin:
-	/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/hpcc/bin:/opt/ibut
-	ils/bin:/mnt/home/perrykai/gitclones/spin-my-script/,
-	PBS_O_MAIL=/var/spool/mail/perrykai,PBS_O_SHELL=/bin/bash,
-	PBS_O_LANG=en_US.UTF-8,
-	PBS_O_WORKDIR=/mnt/research/pigeqtl/analyses/microRNA/3_pcr_duplicati
-	on_analysis/3_24bioosci_mirna_expression_characterization/scripts,
-	PBS_O_HOST=dev-intel14-k20.i,PBS_O_SERVER=mgr-04
-    euser = perrykai
-    egroup = gene-expression
-    queue_type = E
-    etime = Tue Aug 23 13:42:42 2016
-    submit_args = base.sh
-    start_time = Tue Aug 23 13:43:35 2016
-    Walltime.Remaining = 295
-    start_count = 1
-    fault_tolerant = False
-    job_radix = 0
-    submit_host = dev-intel14-k20.i
-
